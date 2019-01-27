@@ -2,8 +2,9 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/mongodb/mongo-go-driver/bson/primitive"
 
-	"github.com/n1ce37/aws/model"
+	"github.com/n1ce37/mongo-learn/model"
 )
 
 func CreateHistory(c *gin.Context) {
@@ -29,7 +30,8 @@ func ListHistories(c *gin.Context) {
 	id := c.Keys["uuid"]
 	h := model.History{}
 	h.UUID = id.(string)
-	data, cnt, err := h.FindMany(0, 10)
+	page, size := getPageAndSize(c)
+	data, cnt, err := h.FindMany(page, size)
 	if err != nil {
 		RespFail(c, err)
 		return
@@ -38,8 +40,65 @@ func ListHistories(c *gin.Context) {
 	RespSucess(c, data, cnt)
 }
 
-func ReadHistory(c *gin.Context) {}
+func ReadHistory(c *gin.Context) {
+	id := c.Param("id")
+	h := model.History{}
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
 
-func UpdateHistory(c *gin.Context) {}
+	h.ID = objectID
+	err = h.FindOne()
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
 
-func DeleteHistory(c *gin.Context) {}
+	RespSucess(c, h)
+}
+
+func UpdateHistory(c *gin.Context) {
+	id := c.Param("id")
+	h := model.History{}
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
+
+	h.ID = objectID
+	err = c.BindJSON(&h)
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
+
+	err = h.UpdateOne()
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
+
+	RespSucess(c, h)
+}
+
+func DeleteHistory(c *gin.Context) {
+	h := model.History{}
+	id := c.Param("id")
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
+
+	h.ID = objectID
+	err = h.DeleteOne()
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
+
+	RespSucess(c, id)
+}

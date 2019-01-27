@@ -1,10 +1,8 @@
 package api
 
 import (
-	"github.com/google/uuid"
 	"github.com/gin-gonic/gin"
-
-	
+	"github.com/google/uuid"
 )
 
 func ListUsers(c *gin.Context) {

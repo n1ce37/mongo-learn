@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/n1ce37/aws/model"
+	"github.com/n1ce37/mongo-learn/model"
 )
 
 func CreateTemplate(c *gin.Context) {

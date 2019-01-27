@@ -3,8 +3,8 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/n1ce37/aws/api"
-	"github.com/n1ce37/aws/api/middleware"
+	"github.com/n1ce37/mongo-learn/api"
+	"github.com/n1ce37/mongo-learn/api/middleware"
 )
 
 func SetupRouter() *gin.Engine {

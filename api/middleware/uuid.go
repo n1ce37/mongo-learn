@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/n1ce37/aws/api"
+	"github.com/n1ce37/mongo-learn/api"
 )
 
 func GetUUID(c *gin.Context) {
