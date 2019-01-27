@@ -1,1 +1,1 @@
-aws
+it is a project for learn mongodb in go
