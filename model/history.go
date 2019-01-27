@@ -1,14 +1,12 @@
 package model
 
 import (
-	"context"
 	"time"
-
-	"github.com/mongodb/mongo-go-driver/mongo/options"
 
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/bson/primitive"
 	"github.com/mongodb/mongo-go-driver/mongo"
+	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
 
 var historyC *mongo.Collection
@@ -54,14 +52,12 @@ func (h *History) FindMany(page, size int) ([]History, int, error) {
 		options.Find().SetLimit(int64(size)),
 		options.Find().SetSort(sort),
 	)
+	defer cur.Close(nil)
 
 	cnt, err := historyC.Count(nil, filter)
-
 	if err != nil {
 		return nil, -1, err
 	}
-
-	defer cur.Close(context.Background())
 
 	histories := make([]History, 0)
 	for cur.Next(nil) {
@@ -78,9 +74,8 @@ func (h *History) FindMany(page, size int) ([]History, int, error) {
 
 func (h *History) FindOne() error {
 	filter := bson.D{
-		{
-			"_id", h.ID,
-		},
+		{"_id", h.ID},
+		{"uuid", h.UUID},
 	}
 	opt := options.FindOne().SetProjection(
 		bson.D{
@@ -102,10 +97,10 @@ func (h *History) FindOne() error {
 
 func (h *History) UpdateOne() error {
 	filter := bson.D{
-		{
-			"_id", h.ID,
-		},
+		{"_id", h.ID},
+		{"uuid", h.UUID},
 	}
+
 	updateData := bson.D{
 		{"$set", bson.D{
 			{"title", h.Title},
@@ -120,13 +115,4 @@ func (h *History) UpdateOne() error {
 	}
 
 	return nil
-}
-
-func (h *History) DeleteOne() error {
-	filter := bson.D{
-		{"_id", h.ID},
-	}
-
-	_, err := historyC.DeleteOne(nil, filter)
-	return err
 }

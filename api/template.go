@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/mongodb/mongo-go-driver/bson/primitive"
 
 	"github.com/n1ce37/mongo-learn/model"
 )
@@ -22,10 +23,33 @@ func CreateTemplate(c *gin.Context) {
 	RespSucess(c, data)
 }
 
-func ListTemplates(c *gin.Context) {}
+func ListTemplates(c *gin.Context) {
+	t := model.Template{}
+	page, size := getPageAndSize(c)
+	data, cnt, err := t.FindMany(page, size)
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
 
-func ReadTemplate(c *gin.Context) {}
+	RespSucess(c, data, cnt)
+}
 
-func UpdateTemplate(c *gin.Context) {}
+func ReadTemplate(c *gin.Context) {
+	id := c.Param("id")
+	t := model.Template{}
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
 
-func DeleteTemplate(c *gin.Context) {}
+	t.ID = objectID
+	err = t.FindOne()
+	if err != nil {
+		RespFail(c, err)
+		return
+	}
+
+	RespSucess(c, t)
+}

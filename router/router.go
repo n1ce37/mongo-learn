@@ -22,8 +22,6 @@ func SetupRouter() *gin.Engine {
 		templateRouter.POST("/", api.CreateTemplate)
 		templateRouter.GET("/", api.ListTemplates)
 		templateRouter.GET("/:id", api.ReadTemplate)
-		templateRouter.PATCH("/:id", api.UpdateTemplate)
-		templateRouter.DELETE("/:id", api.DeleteTemplate)
 	}
 
 	historyRouter := baseRouter.Group("/histories", middleware.GetUUID)
@@ -32,7 +30,6 @@ func SetupRouter() *gin.Engine {
 		historyRouter.GET("/", api.ListHistories)
 		historyRouter.GET("/:id", api.ReadHistory)
 		historyRouter.PATCH("/:id", api.UpdateHistory)
-		historyRouter.DELETE("/:id", api.DeleteHistory)
 	}
 
 	return r

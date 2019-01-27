@@ -50,6 +50,7 @@ func ReadHistory(c *gin.Context) {
 	}
 
 	h.ID = objectID
+	h.UUID = c.Keys["uuid"].(string)
 	err = h.FindOne()
 	if err != nil {
 		RespFail(c, err)
@@ -67,13 +68,14 @@ func UpdateHistory(c *gin.Context) {
 		RespFail(c, err)
 		return
 	}
-
-	h.ID = objectID
 	err = c.BindJSON(&h)
 	if err != nil {
 		RespFail(c, err)
 		return
 	}
+
+	h.ID = objectID
+	h.UUID = c.Keys["uuid"].(string)
 
 	err = h.UpdateOne()
 	if err != nil {
@@ -82,23 +84,4 @@ func UpdateHistory(c *gin.Context) {
 	}
 
 	RespSucess(c, h)
-}
-
-func DeleteHistory(c *gin.Context) {
-	h := model.History{}
-	id := c.Param("id")
-	objectID, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		RespFail(c, err)
-		return
-	}
-
-	h.ID = objectID
-	err = h.DeleteOne()
-	if err != nil {
-		RespFail(c, err)
-		return
-	}
-
-	RespSucess(c, id)
 }

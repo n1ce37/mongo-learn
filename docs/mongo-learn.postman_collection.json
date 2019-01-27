@@ -6,42 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "模板",
-			"item": [
-				{
-					"name": "新建",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"title\": \"test\",\n\t\"introduction\": \"test\",\n\t\"data\": [\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t}]\n}"
-						},
-						"url": {
-							"raw": "localhost:8080/api/templates/",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"templates",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "用户",
 			"item": [
 				{
@@ -90,7 +54,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"test\",\n\t\"introduction\": \"test\",\n\t\"data\": [\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t},\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"title\": \"tes22211\",\n\t\"introduction\": \"test\",\n\t\"data\": [\n\t\t{\n\t\t\t\"a\": \"test222\",\n\t\t\t\"b\": \"test\"\n\t\t},\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/histories",
@@ -202,36 +166,123 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "模板",
+			"item": [
 				{
-					"name": "删除单个",
+					"name": "新建",
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
-								"key": "uuid",
-								"type": "text",
-								"value": "a738aad2-cddf-4fc4-8fd8-9567a543b643"
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
 							},
+							{
+								"key": "uuid",
+								"value": "a738aad2-cddf-4fc4-8fd8-9567a543b643",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"tes22211\",\n\t\"introduction\": \"test\",\n\t\"data\": [\n\t\t{\n\t\t\t\"a\": \"test222\",\n\t\t\t\"b\": \"test\"\n\t\t},\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/templates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"templates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询多个",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
 								"type": "text",
 								"value": "application/json"
+							},
+							{
+								"key": "uuid",
+								"value": "a738aad2-cddf-4fc4-8fd8-9567a543b643",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"test\",\n\t\"introduction\": \"test\",\n\t\"data\": [\n\t\t{\n\t\t\t\"a\": \"test1\",\n\t\t\t\"b\": \"test\"\n\t\t},\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"title\": \"test\",\n\t\"introduction\": \"test\",\n\t\"data\": [\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t}]\n}"
 						},
 						"url": {
-							"raw": "{{url}}/histories/5c4d3d16fa7a82a1d602b72e",
+							"raw": "{{url}}/templates?p=1&s=10",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"histories",
-								"5c4d3d16fa7a82a1d602b72e"
+								"templates"
+							],
+							"query": [
+								{
+									"key": "p",
+									"value": "1"
+								},
+								{
+									"key": "s",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询单个",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "uuid",
+								"value": "a738aad2-cddf-4fc4-8fd8-9567a543b643",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"test\",\n\t\"introduction\": \"test\",\n\t\"data\": [\n\t\t{\n\t\t\t\"a\": \"test\",\n\t\t\t\"b\": \"test\"\n\t\t}]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/templates/5c4d66e3d49bd9bbcef0ed8f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"templates",
+								"5c4d66e3d49bd9bbcef0ed8f"
 							]
 						}
 					},
